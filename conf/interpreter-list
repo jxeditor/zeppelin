@@ -33,14 +33,12 @@ ignite          org.apache.zeppelin:zeppelin-ignite:0.10.0               Ignite 
 java            org.apache.zeppelin:zeppelin-java:0.10.0                 Java interpreter
 jdbc            org.apache.zeppelin:zeppelin-jdbc:0.10.0                 Jdbc interpreter
 kotlin          org.apache.zeppelin:zeppelin-kotlin:0.10.0               Kotlin interpreter
-kylin           org.apache.zeppelin:zeppelin-kylin:0.10.0                Kylin interpreter
 livy            org.apache.zeppelin:zeppelin-livy:0.10.0                 Livy interpreter
 md              org.apache.zeppelin:zeppelin-markdown:0.10.0             Markdown support
 neo4j           org.apache.zeppelin:zeppelin-neo4j:0.10.0                Neo4j interpreter
 pig             org.apache.zeppelin:zeppelin-pig:0.10.0                  Pig interpreter
 python          org.apache.zeppelin:zeppelin-python:0.10.0               Python interpreter
 sap             org.apache.zeppelin:zeppelin-sap:0.10.0                  SAP Support
-scalding        org.apache.zeppelin:zeppelin-scalding_2.0.10:0.10.0      Scalding interpreter
 scio            org.apache.zeppelin:zeppelin-scio:0.10.0                 Scio interpreter
 shell           org.apache.zeppelin:zeppelin-shell:0.10.0                Shell command
 sparql          org.apache.zeppelin:zeppelin-sparql:0.10.0               Sparql interpreter

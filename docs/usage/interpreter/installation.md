@@ -61,18 +61,7 @@ Zeppelin support both Scala 2.10 and 2.11 for several interpreters as below:
     <td>org.apache.zeppelin:zeppelin-spark_2.10:0.10.0</td>
     <td>org.apache.zeppelin:zeppelin-spark_2.11:0.10.0</td>
   </tr>
-  <tr>
-    <td>scalding</td>
-    <td>org.apache.zeppelin:zeppelin-scalding_2.10:0.10.0</td>
-    <td>org.apache.zeppelin:zeppelin-scalding_2.11:0.10.0</td>
-  </tr>
 </table>
-
-If you install one of these interpreters only with `--name` option, installer will download interpreter built with Scala 2.11 by default. If you want to specify Scala version, you will need to add `--artifact` option. Here is the example of installing flink interpreter built with Scala 2.10.
-
-```bash
-./bin/install-interpreter.sh --name flink --artifact org.apache.zeppelin:zeppelin-scalding_2.10:0.10.0
-```
 
 #### Install Spark interpreter built with Scala 2.10
 
@@ -194,11 +183,6 @@ You can also find the below community managed interpreter list in `conf/interpre
     <td>Kotlin interpreter</td>
   </tr>
   <tr>
-    <td>kylin</td>
-    <td>org.apache.zeppelin:zeppelin-kylin:0.10.0</td>
-    <td>Kylin interpreter</td>
-  </tr>
-  <tr>
     <td>livy</td>
     <td>org.apache.zeppelin:zeppelin-livy:0.10.0</td>
     <td>Livy interpreter</td>
@@ -227,11 +211,6 @@ You can also find the below community managed interpreter list in `conf/interpre
     <td>sap</td>
     <td>org.apache.zeppelin:zeppelin-sap:0.10.0</td>
     <td>SAP support</td>
-  </tr>
-  <tr>
-    <td>scalding</td>
-    <td>org.apache.zeppelin:zeppelin-scalding_2.0.10:0.10.0</td>
-    <td>Scalding interpreter</td>
   </tr>
   <tr>
     <td>scio</td>
