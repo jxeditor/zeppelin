@@ -14,21 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.apache.zeppelin.rest;
-
-import javax.xml.bind.annotation.XmlRootElement;
+package org.apache.zeppelin.rest.message;
 
 /**
- * Response wrapper.
+ *  CredentialRequest rest api request message.
  */
-@XmlRootElement
-public class NotebookResponse {
-  private String msg;
+public class CredentialRequest {
+  private final String entity;
+  private final String username;
+  private final String password;
 
-  public NotebookResponse() {}
-
-  public NotebookResponse(String msg) {
-    this.msg = msg;
+  public CredentialRequest(String entity, String username, String password) {
+    this.entity = entity;
+    this.username = username;
+    this.password = password;
   }
+
+  public String getEntity() {
+    return entity;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
 }
