@@ -99,8 +99,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- language versions -->
-    <maven.compiler.target>1.8</maven.compiler.target>
     <java.version>1.8</java.version>
+    <!-- These two lines could be changed like `maven.compiler.release` after updating JDK11 -->
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
     <scala.version>${scala.2.11.version}</scala.version>
     <scala.binary.version>2.11</scala.binary.version>
     <scala.2.11.version>2.11.12</scala.2.11.version>
@@ -134,7 +136,7 @@
     <commons.collections.version>3.2.2</commons.collections.version>
     <commons.cli.version>1.4</commons.cli.version>
     <shiro.version>1.9.1</shiro.version>
-    <bouncycastle.version>1.60</bouncycastle.version>
+    <bouncycastle.version>1.70</bouncycastle.version>
     <maven.version>3.6.3</maven.version>
     <dropwizard.version>4.1.14</dropwizard.version>
     <micrometer.version>1.6.0</micrometer.version>
@@ -174,7 +176,6 @@
     <plugin.dependency.version>3.1.2</plugin.dependency.version>
     <plugin.deploy.version>2.8.2</plugin.deploy.version>
     <plugin.download.version>1.6.0</plugin.download.version>
-    <plugin.eclipse.version>2.8</plugin.eclipse.version>
     <plugin.enforcer.version>3.0.0-M3</plugin.enforcer.version>
     <plugin.exec.version>1.6.0</plugin.exec.version>
     <plugin.failsafe.version>2.17</plugin.failsafe.version>
@@ -187,7 +188,6 @@
     <plugin.lifecycle.mapping.version>1.0.0</plugin.lifecycle.mapping.version>
     <plugin.protobuf.version>3.11.4</plugin.protobuf.version>
     <plugin.rat.version>0.13</plugin.rat.version>
-    <plugin.remote.resource.version>1.7.0</plugin.remote.resource.version>
     <plugin.resource.version>3.1.0</plugin.resource.version>
     <plugin.s3.upload.version>1.4</plugin.s3.upload.version>
     <plugin.scala.alchim31.version>4.6.3</plugin.scala.alchim31.version>
@@ -200,8 +200,6 @@
     <plugin.surefire.version>2.22.2</plugin.surefire.version>
 
     <testcontainers.version>1.15.1</testcontainers.version>
-
-    <plugin.gitcommitid.useNativeGit>false</plugin.gitcommitid.useNativeGit>
 
     <MaxMetaspace>512m</MaxMetaspace>
 
@@ -1447,24 +1445,6 @@
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-remote-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>process-remote-resources</id>
-            <goals>
-              <goal>process</goal>
-            </goals>
-            <configuration>
-              <resourceBundles>
-                <resourceBundle>org.apache:apache-jar-resource-bundle:1.0</resourceBundle>
-              </resourceBundles>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-scm-plugin</artifactId>
         <configuration>
           <connectionType>developerConnection</connectionType>
@@ -1478,7 +1458,7 @@
         <artifactId>maven-enforcer-plugin</artifactId>
         <executions>
           <execution>
-            <id>enforce</id>
+            <id>enforce-dependency-convergence</id>
             <configuration>
               <rules>
                 <DependencyConvergence/>
@@ -1489,47 +1469,12 @@
               <goal>enforce</goal>
             </goals>
           </execution>
-          <!-- https://maven.apache.org/enforcer/enforcer-rules/requireMavenVersion.html -->
-          <execution>
-            <id>enforce-maven</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireMavenVersion>
-                  <version>[3.1.0,)</version>
-                </requireMavenVersion>
-              </rules>
-            </configuration>
-          </execution>
         </executions>
       </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>pl.project13.maven</groupId>
-        <artifactId>git-commit-id-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>revision</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <skipPoms>false</skipPoms>
-          <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-          <useNativeGit>${plugin.gitcommitid.useNativeGit}</useNativeGit>
-          <generateGitPropertiesFile>true</generateGitPropertiesFile>
-          <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-          <failOnNoGitDirectory>false</failOnNoGitDirectory>
-          <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
-        </configuration>
       </plugin>
 
     <!--TODO(alex): make part of the build and reconcile conflicts
@@ -1599,12 +1544,6 @@
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-remote-resources-plugin</artifactId>
-          <version>${plugin.remote.resource.version}</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
           <version>${plugin.checkstyle.version}</version>
           <configuration>
@@ -1645,6 +1584,14 @@
           <groupId>net.alchim31.maven</groupId>
           <artifactId>scala-maven-plugin</artifactId>
           <version>${plugin.scala.alchim31.version}</version>
+          <configuration>
+            <recompileMode>all</recompileMode>
+            <args>
+              <arg>-unchecked</arg>
+              <arg>-deprecation</arg>
+              <arg>-feature</arg>
+            </args>
+          </configuration>
         </plugin>
 
         <plugin>
@@ -1695,65 +1642,6 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
           <version>${plugin.antrun.version}</version>
-        </plugin>
-
-        <!--This plugin's configuration is used to store Eclipse m2e settings
-          only. It has no influence on the Maven build itself. -->
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>${plugin.lifecycle.mapping.version}</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>
-                      org.apache.maven.plugins
-                    </groupId>
-                    <artifactId>
-                      maven-dependency-plugin
-                    </artifactId>
-                    <versionRange>
-                      [2.8,)
-                    </versionRange>
-                    <goals>
-                      <goal>copy-dependencies</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore/>
-                  </action>
-                </pluginExecution>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>
-                      org.apache.maven.plugins
-                    </groupId>
-                    <artifactId>
-                      maven-checkstyle-plugin
-                    </artifactId>
-                    <versionRange>
-                      [2.13,)
-                    </versionRange>
-                    <goals>
-                      <goal>checkstyle</goal>
-                      <goal>check</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore></ignore>
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-eclipse-plugin</artifactId>
-          <version>${plugin.eclipse.version}</version>
         </plugin>
 
         <plugin>
@@ -2037,9 +1925,6 @@
 
     <profile>
       <id>rat</id>
-      <activation>
-        <property><name>!skipRat</name></property>
-      </activation>
       <build>
         <plugins>
         <plugin>
