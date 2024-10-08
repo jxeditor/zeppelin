@@ -34,25 +34,14 @@
 
   <properties>
     <!--library versions-->
+    <guava.version>32.0.0-jre</guava.version>
     <lucene.version>8.7.0</lucene.version>
     <org.reflections.version>0.9.8</org.reflections.version>
     <xml.apis.version>1.4.01</xml.apis.version>
     <commons.vfs2.version>2.6.0</commons.vfs2.version>
-    <!-- Should match which the version from commons-vfs2 -->
-    <jackson.annocations.version>2.9.8</jackson.annocations.version>
     <eclipse.jgit.version>4.5.4.201711221230-r</eclipse.jgit.version>
     <eirslett.version>1.6</eirslett.version>
   </properties>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-annotations</artifactId>
-        <version>${jackson.annocations.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -157,6 +146,12 @@
     </dependency>
 
     <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
     </dependency>
@@ -197,10 +192,6 @@
         <exclusion>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-compress</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-databind</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -285,6 +276,10 @@
       <version>${commons.compress.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client-runtime</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -321,23 +316,4 @@
 
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>hadoop3</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <hadoop.version>${hadoop3.3.version}</hadoop.version>
-      </properties>
-
-      <dependencies>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-client-runtime</artifactId>
-        </dependency>
-      </dependencies>
-    </profile>
-  </profiles>
 </project>
