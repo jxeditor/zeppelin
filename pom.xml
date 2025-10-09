@@ -107,9 +107,7 @@
     <scalatest.version>3.2.19</scalatest.version>
     <scalacheck.version>1.18.1</scalacheck.version>
 
-    <!-- frontend maven plugin related versions-->
-    <node.version>v16.20.2</node.version>
-    <npm.version>8.19.4</npm.version>
+    <!-- frontend maven plugin version-->
     <plugin.frontend.version>1.12.1</plugin.frontend.version>
 
     <!-- common library versions -->
@@ -1030,6 +1028,7 @@
               <exclude>**/src/fonts/simple-line*</exclude>
               <exclude>**/src/fonts/Source-Code-Pro*</exclude>
               <exclude>**/src/fonts/source-code-pro*</exclude>
+              <exclude>**/src/assets/fonts/MaterialSymbolsOutlined.woff2</exclude>
               <exclude>**/src/**/**.test.js</exclude>
               <exclude>**/e2e/**/**.spec.js</exclude>
               <exclude>package-lock.json</exclude>
@@ -1040,6 +1039,7 @@
               <exclude>**/.prettierrc</exclude>
               <exclude>**/.prettierignore</exclude>
               <exclude>**/.editorconfig</exclude>
+              <exclude>**/src/styles/fonts/fontawesome*</exclude>
               <exclude>**/src/**/*.svg</exclude>
               <exclude>**/.gitkeep</exclude>
 

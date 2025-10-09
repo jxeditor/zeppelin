@@ -10,8 +10,10 @@
  * limitations under the License.
  */
 
+export * from './angular-drag-drop.service';
 export * from './array-ordering.service';
 export * from './base-url.service';
+export * from './classic-visualization.service';
 export * from './completion.service';
 export * from './configuration.service';
 export * from './credential.service';
@@ -29,4 +31,5 @@ export * from './runtime-compiler.service';
 export * from './save-as.service';
 export * from './security.service';
 export * from './shortcut.service';
+export * from './theme.service';
 export * from './ticket.service';

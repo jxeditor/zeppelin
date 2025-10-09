@@ -23,6 +23,7 @@
     [currentRevision]="currentRevision"
     (tableHideChange)="setAllParagraphTableHide($event)"
     (editorHideChange)="setAllParagraphEditorHide($event)"
+    (handleSearch)="onParagraphSearch($event)"
     #actionBar
   ></zeppelin-notebook-action-bar>
   <div class="flex-container">
@@ -42,7 +43,7 @@
       <nz-resize-handle *ngIf="isSidebarOpen" nzDirection="right"><div class="sidebar-resize"></div></nz-resize-handle>
     </div>
     <div class="notebook-area">
-      <div class="extension-area" [ngSwitch]="activatedExtension" *ngIf="activatedExtension !== 'hide'">
+      <div class="extension-area" [ngSwitch]="activatedExtension" *ngIf="activatedExtension !== 'hide' && permissions">
         <zeppelin-notebook-interpreter-binding
           *ngSwitchCase="'interpreter'"
           [noteId]="note.id"
@@ -71,7 +72,7 @@
           <zeppelin-notebook-paragraph
             nz-col
             *ngFor="let p of note.paragraphs; let first = first; let last = last; index as i"
-            [nzSpan]="p.config.colWidth * 2"
+            [nzSpan]="(p.config.colWidth || 12) * 2"
             [select]="p.id === selectId"
             [scrolled]="p.id === scrolledId"
             [index]="i"
