@@ -10,14 +10,23 @@
  * limitations under the License.
  */
 
-import { Locator, Page } from '@playwright/test';
-import { BasePage } from './base-page';
+import { expect } from '@playwright/test';
+import { NoteTocPage } from './note-toc-page';
 
-export class WorkspacePage extends BasePage {
-  readonly routerOutlet: Locator;
+export class NoteTocPageUtil {
+  private noteTocPage: NoteTocPage;
 
-  constructor(page: Page) {
-    super(page);
-    this.routerOutlet = page.locator('zeppelin-workspace router-outlet');
+  constructor(noteTocPage: NoteTocPage) {
+    this.noteTocPage = noteTocPage;
+  }
+
+  async verifyTocPanelOpens(): Promise<void> {
+    await this.noteTocPage.clickTocToggle();
+    await expect(this.noteTocPage.tocPanel).toBeVisible();
+  }
+
+  async verifyTocPanelCloses(): Promise<void> {
+    await this.noteTocPage.clickTocClose();
+    await expect(this.noteTocPage.tocPanel).not.toBeVisible();
   }
 }
